@@ -1,0 +1,3 @@
+python -m flask --app market --debug run
+python -m flask --app market run
+ set FLASK_APP=market.py
