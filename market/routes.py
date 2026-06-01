@@ -22,18 +22,18 @@ def market_page():
         if p_item_object:
             if current_user.can_purchase(p_item_object):
                 p_item_object.buy(current_user)
-                flash(f"Congratulations! You purchased {p_item_object.name} for {p_item_object.price}$", category='success')
+                flash(f"{p_item_object.name} has been added to your order!", category='success')
             else:
-                flash(f"Unfortunately, you don't have enough money to purchase {p_item_object.name}!", category='danger')
+                flash(f"Unfortunately, you don't have enough money to selecting {p_item_object.name}!", category='danger')
         #Sell Item Logic
         sold_item = request.form.get('sold_item')
         s_item_object = Item.query.filter_by(name=sold_item).first()
         if s_item_object:
             if current_user.can_sell(s_item_object):
                 s_item_object.sell(current_user)
-                flash(f"Congratulations! You sold {s_item_object.name} back to market!", category='success')
+                flash(f"{s_item_object.name} has been removed from your order.", category='success')
             else:
-                flash(f"Something went wrong with selling {s_item_object.name}", category='danger')
+                flash(f"Something went wrong with removing {s_item_object.name}", category='danger')
 
 
         return redirect(url_for('market_page'))
@@ -49,6 +49,7 @@ def register_page():
     if form.validate_on_submit():
         user_to_create = User(username=form.username.data,
                               email_address=form.email_address.data,
+                              phone_number=form.phone_number.data,
                               password=form.password1.data)
         db.session.add(user_to_create)
         db.session.commit()

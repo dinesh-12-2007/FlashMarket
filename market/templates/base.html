@@ -14,7 +14,7 @@
    </head>
    <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Flask Market</a>
+      <a class="navbar-brand" href="{{ url_for('home_page') }}">Sri Kanaka Durga Caters</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -24,17 +24,17 @@
                 <a class="nav-link" href="{{ url_for('home_page') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('market_page') }}">Market</a>
+                <a class="nav-link" href="{{ url_for('market_page') }}">Menu</a>
             </li>
         </ul>
           {% if current_user.is_authenticated %}
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link" style="color: lawngreen; font-weight: bold">
                         <i class="fas fa-coins"></i>
                         {{ current_user.prettier_budget }}
                     </a>
-                </li>
+                </li>-->
                 <li class="nav-item">
                     <a class="nav-link">Welcome, {{ current_user.username }}</a>
                 </li>
@@ -82,8 +82,8 @@
    </body>
    <style>
       body {
-      background-color: #a90202;
-      color: white
+      background-color: #ff0000;
+      color: rgb(231, 163, 163)
       }
    </style>
 </html>

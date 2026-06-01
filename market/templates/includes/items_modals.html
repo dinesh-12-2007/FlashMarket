@@ -32,7 +32,7 @@
   </div>
 </div>
 
-<!-- Purchase Confirm -->
+<!-- Select Item Confirm -->
 <div class="modal fade" id="Modal-PurchaseConfirm-{{ item.id }}"
      tabindex="-1"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -52,11 +52,11 @@
         <form method="POST">
           {{ purchase_form.hidden_tag() }}
           <h4 class="text-center">
-            Are you sure you want to buy {{ item.name }} for {{ item.price }}$ ?
+            Are you sure you want to add {{ item.name }} to your order?
           </h4>
           <br>
           <h6 class="text-center">
-            By clicking Purchase, you will purchase this item.
+            By clicking Select Item, this item will be added to your order.
           </h6>
           <br>
           <input id="purchased_item" name="purchased_item" type="hidden" value="{{item.name}}">
