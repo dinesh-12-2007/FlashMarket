@@ -1,73 +1,90 @@
-<style>
-  .modal-content {
-    background-color: #212121
-  }
-</style>
+<!-- More Info Modal for Dish -->
+<div class="modal fade" id="Modal-MoreInfo-{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="modalLabelMoreInfo{{ item.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
+            <div class="modal-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <span class="badge badge-brand rounded-pill px-3 py-1 mr-2 font-weight-bold">Dish #{{ item.id }}</span>
+                    <h5 class="modal-title font-weight-bold text-dark mb-0" id="modalLabelMoreInfo{{ item.id }}">
+                        {{ item.name }}
+                    </h5>
+                </div>
+                <button type="button" class="close text-muted" data-dismiss="modal" aria-label="Close" style="outline: none;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body p-4 text-left">
+                <!-- Dish Image Preview -->
+                <div class="text-center mb-3">
+                    <img src="{{ url_for('static', filename='images/' + item.image) }}" 
+                         alt="{{ item.name }}" 
+                         class="img-fluid rounded shadow-sm"
+                         style="max-height: 220px; width: 100%; object-fit: cover; border: 1px solid #f3f4f6;"
+                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600';">
+                </div>
 
-<!-- More Info -->
-<div class="modal fade" id="Modal-MoreInfo-{{ item.id }}"
-     tabindex="-1"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabel">
-          <!-- -->
-          {{ item.name }}
-        </h5>
-        <button type="button" class="close"
-                data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {{ item.description }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary"
-                data-dismiss="modal">Close
-        </button>
-      </div>
+                <h6 class="text-uppercase small font-weight-bold text-muted mb-2">Description (వివరణ)</h6>
+                <p class="text-dark font-weight-normal mb-3" style="line-height: 1.6; font-size: 0.98rem;">
+                    {{ item.description }}
+                </p>
+
+                <div class="bg-light p-3 rounded d-flex align-items-center justify-content-between">
+                    <div>
+                        <small class="text-muted d-block">Preparation Standard</small>
+                        <span class="small font-weight-bold text-dark"><i class="fas fa-check-circle text-success mr-1"></i> Fresh Event Batch Dum-Cooked</span>
+                    </div>
+                    <span class="badge badge-success px-2 py-1 font-weight-bold">Active in DB</span>
+                </div>
+            </div>
+
+            <div class="modal-footer bg-white border-top py-3">
+                <button type="button" class="btn btn-light font-weight-bold px-3" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-brand-primary font-weight-bold px-3 shadow-sm" data-dismiss="modal" data-toggle="modal" data-target="#Modal-PurchaseConfirm-{{ item.id }}">
+                    <i class="fas fa-plus-circle mr-1"></i> Select for Order
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
-<!-- Select Item Confirm -->
-<div class="modal fade" id="Modal-PurchaseConfirm-{{ item.id }}"
-     tabindex="-1"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabel">
-          <!-- -->
-          {{ item.name }}
-        </h5>
-        <button type="button" class="close"
-                data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form method="POST">
-          {{ purchase_form.hidden_tag() }}
-          <h4 class="text-center">
-            Are you sure you want to add {{ item.name }} to your order?
-          </h4>
-          <br>
-          <h6 class="text-center">
-            By clicking Select Item, this item will be added to your order.
-          </h6>
-          <br>
-          <input id="purchased_item" name="purchased_item" type="hidden" value="{{item.name}}">
-          {{ purchase_form.submit(class="btn btn-outline-success btn-block") }}
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary"
-                data-dismiss="modal">Close
-        </button>
-      </div>
+<!-- Select Item Confirm Modal -->
+<div class="modal fade" id="Modal-PurchaseConfirm-{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="modalLabelPurchaseConfirm{{ item.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
+            <div class="modal-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between">
+                <h5 class="modal-title font-weight-bold text-dark mb-0" id="modalLabelPurchaseConfirm{{ item.id }}">
+                    <i class="fas fa-utensils text-primary mr-2"></i> Confirm Selection
+                </h5>
+                <button type="button" class="close text-muted" data-dismiss="modal" aria-label="Close" style="outline: none;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body p-4 text-center">
+                <div class="icon-circle mx-auto mb-3" style="width: 60px; height: 60px; background: #fff7ed; color: #e65100; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                    <i class="fas fa-concierge-bell"></i>
+                </div>
+                
+                <h5 class="font-weight-bold text-dark mb-2">
+                    Add <span class="text-primary">{{ item.name }}</span> to your catering order?
+                </h5>
+                <p class="text-muted small mb-4">
+                    By confirming, this dish will be marked as selected in your active SQLite catering session.
+                    <br><span class="text-secondary">(ఈ ఐటమ్ మీ ఆర్డర్‌లో చేర్చబడుతుంది)</span>
+                </p>
+
+                <!-- Flask PurchaseItemForm connected directly to market_page POST -->
+                <form method="POST" action="{{ url_for('market_page') }}">
+                    {{ purchase_form.hidden_tag() }}
+                    <input type="hidden" name="purchased_item" value="{{ item.name }}">
+                    
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="button" class="btn btn-light font-weight-bold px-4 py-2 mr-2" data-dismiss="modal">Cancel</button>
+                        {{ purchase_form.submit(class="btn btn-brand-primary font-weight-bold px-4 py-2 shadow-sm", value="Confirm & Add Item") }}
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

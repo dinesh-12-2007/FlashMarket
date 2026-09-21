@@ -1,54 +1,39 @@
-<style>
-  .modal-content {
-    background-color: #212121
-  }
-</style>
+<!-- Remove Item Confirmation Modal for Owned Item -->
+<div class="modal fade" id="Modal-SellingConfirm-{{ owned_item.id }}" tabindex="-1" role="dialog" aria-labelledby="modalLabelSellingConfirm{{ owned_item.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
+            <div class="modal-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between">
+                <h5 class="modal-title font-weight-bold text-danger mb-0" id="modalLabelSellingConfirm{{ owned_item.id }}">
+                    <i class="fas fa-trash-alt mr-2"></i> Remove Item
+                </h5>
+                <button type="button" class="close text-muted" data-dismiss="modal" aria-label="Close" style="outline: none;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-<!-- Remove Confirm -->
-<div class="modal fade" id="Modal-SellingConfirm-{{ owned_item.id }}"
-     tabindex="-1"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabel">
-          <!-- -->
-          {{ owned_item.name }}
-        </h5>
-        <button type="button" class="close"
-                data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form method="POST">
-           {{ selling_form.hidden_tag() }}
+            <div class="modal-body p-4 text-center">
+                <div class="icon-circle mx-auto mb-3" style="width: 56px; height: 56px; background: #fee2e2; color: #dc2626; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                
+                <h5 class="font-weight-bold text-dark mb-2">
+                    Remove <span class="text-danger">{{ owned_item.name }}</span> from your order?
+                </h5>
+                <p class="text-muted small mb-4">
+                    This item will be released back to the general catering menu and removed from your active order booking.
+                </p>
 
-              <h4 class="text-center">
-            Remove {{ owned_item.name }} from your order?
-        </h4>
+                <!-- Flask SellItemForm connected directly to market_page POST -->
+                <form method="POST" action="{{ url_for('market_page') }}">
+                    {{ selling_form.hidden_tag() }}
+                    <input type="hidden" name="sold_item" value="{{ owned_item.name }}">
 
-        <br>
-
-        <h6 class="text-center">
-            By clicking Remove Item, this item will be removed from your order.
-        </h6>
-
-        <br>
-
-        <input id="sold_item"
-               name="sold_item"
-               type="hidden"
-               value="{{ owned_item.name }}">
-
-        {{ selling_form.submit(class="btn btn-outline-danger btn-block", value="Remove Item") }}
-    </form>
-</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary"
-                data-dismiss="modal">Close
-        </button>
-      </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-light font-weight-bold px-4 py-2 mr-2" data-dismiss="modal">Keep in Order</button>
+                        {{ selling_form.submit(class="btn btn-danger font-weight-bold px-4 py-2 shadow-sm", value="Yes, Remove Item") }}
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

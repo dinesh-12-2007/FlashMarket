@@ -1,43 +1,120 @@
 {% extends 'base.html' %}
+
 {% block title %}
-    Register Page
+Register Client - Sri Kanaka Durga Caters
 {% endblock %}
 
 {% block content %}
-<body class="text-center">
-    <div class="container">
-        <form method="POST" class="form-register" style="color:white">
-            {{ form.hidden_tag() }}
-            <img class="d-block mx-auto mb-3 rounded-circle" width="100" src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="">
-            <h1 class="h3 mb-3 font-weight-normal">
-                Please Create your Account
-            </h1>
-            <br>
-            {{ form.username.label() }}
-            {{ form.username(class="form-control", placeholder="User Name") }}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <!-- Registration Card -->
+            <div class="card border-0 shadow-sm rounded-lg overflow-hidden" style="border: 1px solid #e5e7eb;">
+                <div class="card-header bg-white text-center py-4 border-bottom-0">
+                    <div class="brand-icon mx-auto mb-3" style="width: 52px; height: 52px; background: #e65100; color: #ffffff; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(230, 81, 0, 0.25);">
+                        <i class="fas fa-user-plus fa-lg"></i>
+                    </div>
+                    <h3 class="font-weight-bolder text-dark mb-1">Create Client Account</h3>
+                    <p class="text-muted small mb-0">Register to select catering menus & manage event orders</p>
+                </div>
 
-            {{ form.email_address.label() }}
-            {{ form.email_address(class="form-control", placeholder="Email Address") }}
+                <div class="card-body p-4 pt-0">
+                    <!-- Form connected directly to Flask RegisterForm in forms.py & routes.py -->
+                    <form method="POST" action="{{ url_for('register_page') }}" novalidate>
+                        {{ form.hidden_tag() }}
 
-            {{ form.phone_number.label() }}
-            {{ form.phone_number(class="form-control", placeholder="Phone Number") }}
+                        <!-- Username Field -->
+                        <div class="form-group mb-3">
+                            <label class="font-weight-bold small text-secondary mb-1" for="username">
+                                <i class="fas fa-user text-primary mr-1"></i> User Name
+                            </label>
+                            {{ form.username(class="form-control form-control-lg", placeholder="Choose a unique username", id="username", required=True) }}
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback d-block mt-1">
+                                    {% for error in form.username.errors %}
+                                        <small><i class="fas fa-exclamation-circle mr-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
 
-            {{ form.password1.label() }}
-            {{ form.password1(class="form-control", placeholder="Password") }}
+                        <!-- Email Address Field -->
+                        <div class="form-group mb-3">
+                            <label class="font-weight-bold small text-secondary mb-1" for="email_address">
+                                <i class="fas fa-envelope text-primary mr-1"></i> Email Address
+                            </label>
+                            {{ form.email_address(class="form-control form-control-lg", placeholder="name@example.com", id="email_address", required=True) }}
+                            {% if form.email_address.errors %}
+                                <div class="invalid-feedback d-block mt-1">
+                                    {% for error in form.email_address.errors %}
+                                        <small><i class="fas fa-exclamation-circle mr-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
 
-            {{ form.password2.label() }}
-            {{ form.password2(class="form-control", placeholder="Confirm Password") }}
+                        <!-- Phone Number Field -->
+                        <div class="form-group mb-3">
+                            <label class="font-weight-bold small text-secondary mb-1" for="phone_number">
+                                <i class="fas fa-phone-alt text-primary mr-1"></i> Phone Number (10 Digits)
+                            </label>
+                            {{ form.phone_number(class="form-control form-control-lg", placeholder="e.g. 9848022338", id="phone_number", maxlength="10", required=True) }}
+                            {% if form.phone_number.errors %}
+                                <div class="invalid-feedback d-block mt-1">
+                                    {% for error in form.phone_number.errors %}
+                                        <small><i class="fas fa-exclamation-circle mr-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
 
-            <br>
+                        <div class="row">
+                            <!-- Password Field -->
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="font-weight-bold small text-secondary mb-1" for="password1">
+                                    <i class="fas fa-lock text-primary mr-1"></i> Password
+                                </label>
+                                {{ form.password1(class="form-control form-control-lg", placeholder="Min. 6 characters", id="password1", required=True) }}
+                                {% if form.password1.errors %}
+                                    <div class="invalid-feedback d-block mt-1">
+                                        {% for error in form.password1.errors %}
+                                            <small><i class="fas fa-exclamation-circle mr-1"></i>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-            <div class="checkbox mb-3">
-               <h6>Already have an account?</h6>
-               <a class="btn btn-sm btn-secondary" href="{{ url_for('login_page') }}">Login</a>
+                            <!-- Confirm Password Field -->
+                            <div class="col-md-6 form-group mb-4">
+                                <label class="font-weight-bold small text-secondary mb-1" for="password2">
+                                    <i class="fas fa-check-double text-primary mr-1"></i> Confirm Password
+                                </label>
+                                {{ form.password2(class="form-control form-control-lg", placeholder="Repeat password", id="password2", required=True) }}
+                                {% if form.password2.errors %}
+                                    <div class="invalid-feedback d-block mt-1">
+                                        {% for error in form.password2.errors %}
+                                            <small><i class="fas fa-exclamation-circle mr-1"></i>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-group mb-3">
+                            {{ form.submit(class="btn btn-brand-primary btn-block btn-lg font-weight-bold shadow-sm py-2", value="Create Account & Start Order") }}
+                        </div>
+
+                        <div class="text-center mt-3 pt-3 border-top">
+                            <span class="text-muted small">Already have an account?</span>
+                            <a class="text-primary font-weight-bold small ml-1 text-decoration-none" href="{{ url_for('login_page') }}">
+                                Sign In <i class="fas fa-arrow-right fa-xs ml-1"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
-
-        </form>
+        </div>
     </div>
-</body>
+</div>
 {% endblock %}
